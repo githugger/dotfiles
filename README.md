@@ -2,8 +2,7 @@ Basic dotfiles for Neovim Tmux (and Zsh)
 ---
 
 My personal dotfiles used with Neovim, Tmux (and Zsh) on Linux.
-
-Forked and tweaked from https://github.com/drahosp/dotfiles. (Check his repo especially if you're on a Mac for homebrew and general OSX stuffs!)
+Forked and tweaked from https://github.com/drahosp/dotfiles.
 
 Includes dotfiles for:
  * [Neovim](https://github.com/neovim/neovim)
