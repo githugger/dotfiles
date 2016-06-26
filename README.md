@@ -1,7 +1,9 @@
 Basic dotfiles for Neovim Tmux (and Zsh)
 ---
 
-My personal dotfiles used with Neovim, Tmux (and Zsh) on Linux. Forked and tweaked from https://github.com/drahosp/dotfiles. (Check his repo especially if you're on a Mac for homebrew and general OSX stuffs!)
+My personal dotfiles used with Neovim, Tmux (and Zsh) on Linux.
+
+Forked and tweaked from https://github.com/drahosp/dotfiles. (Check his repo especially if you're on a Mac for homebrew and general OSX stuffs!)
 
 Includes dotfiles for:
  * [Neovim](https://github.com/neovim/neovim)
@@ -23,9 +25,6 @@ chsh /bin/zsh # if needed
 ```
 
 After install Tmux plugins are installed using Ctrl-A I and Neovim plugins using :PlugInstall.
-
-The neovim Plugin [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) is set up to to automatically be compiled for clang and javascript support after the plugin installation via [VimPlug](https://github.com/junegunn/vim-plug) in the neovim config. You can check for additional language support and installation instructions [here](https://github.com/Valloric/YouCompleteMe#installation).
-
 
 Used software
 ---
