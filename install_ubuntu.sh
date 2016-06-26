@@ -25,5 +25,13 @@ mkdir -p $HOME/.fonts/Library/U
 ln -s $PWD/fonts/UbuntuMonoDerivativePowerlineNerdFontComplete.ttf $HOME/.fonts/Library/U/Ubuntu\ Ubuntu\ Mono\ derivative\ Powerline\ Nerd\ Font\ Complete\ Mono.ttf
 fc-cache -f -v
 
+# X setup
+# The provided Xdefault uses a font not installed in this version of install.sh
+# Change the used font or use the install_ubuntu.sh script.
+ln -s $PWD/config/Xdefaults $HOME/.Xdefaults
+pushd $HOME
+xrdb ./.Xdefaults
+popd
+
 # Fix CTRL-H
 ln -s $PWD/xterm-256color.ti $HOME/xterm-256color.ti
