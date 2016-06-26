@@ -7,6 +7,7 @@ Forked and tweaked from https://github.com/drahosp/dotfiles.
 Includes dotfiles for:
  * [Neovim](https://github.com/neovim/neovim)
  * tmux
+ * i3 [i3](https://github.com/i3/i3)
  * zsh
  * git (rudimentary .git-config)
  * tern for javascript vim completion
