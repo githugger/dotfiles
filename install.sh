@@ -2,7 +2,7 @@
 set -e
 
 # Clean up targets
-rm -rf $HOME/.config/nvim* $HOME/.zsh* $HOME/.tmux*
+rm -rf $HOME/.config/nvim* $HOME/.zsh* $HOME/.tmux* $HOME/.gitconfig
 
 # Make subdirs
 mkdir -p $HOME/.config/nvim
@@ -12,6 +12,7 @@ mkdir -p $HOME/.config/nvim
 ln -s $PWD/config/tmux $HOME/.tmux.conf
 ln -s $PWD/config/neovim $HOME/.config/nvim/init.vim
 ln -s $PWD/config/gitconfig $HOME/.gitconfig
+ln -s $PWD/config/tern-config $HOME/.tern-config
 
 # Fix CTRL-H
 ln -s $PWD/xterm-256color.ti $HOME/xterm-256color.ti
