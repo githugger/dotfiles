@@ -23,6 +23,7 @@ ln -s $PWD/colors $HOME/.colors
 # Install font with extra nerd- and powerline-symbol support
 mkdir -p $HOME/.fonts/Library/U
 ln -s $PWD/fonts/UbuntuMonoDerivativePowerlineNerdFontComplete.ttf $HOME/.fonts/Library/U/Ubuntu\ Ubuntu\ Mono\ derivative\ Powerline\ Nerd\ Font\ Complete\ Mono.ttf
+ln -s $PWD/fonts/meslo_code.ttf $HOME/.fonts/Library/U/meslo_code.ttf
 fc-cache -f -v
 
 # X setup
