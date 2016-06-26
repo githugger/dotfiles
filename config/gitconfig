@@ -1,0 +1,15 @@
+[user]
+  name = Frederic Schneider
+  email = frederic.schneider@rwth-aachen.de
+[color]
+  ui = auto
+[core]
+  editor = nvim
+[github]
+  user = githugger
+[alias]
+
+[merge]
+  ff = no
+  ff = false
+  commit = no
