@@ -1,6 +1,13 @@
-" ---
+" .(neo)vimrc
+"
+" Install Plugins via vim-plug using `:PlugInstall`
+" Plugins used that need additional configuration/compilation/or the like:
+"   *YouCompleteMe (python script, compile with language support as needed)
+"   *Themes (Need appropriate terminal theme)
+
+" ================
 " VimPlug
-" ---
+" ================
 " Download and use vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/plug/vim-plug/plug.vim --create-dirs
@@ -11,55 +18,99 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'morhetz/gruvbox'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimfiler.vim'
+" ---
+" Plugins
+" ---
+Plug 'christoomey/vim-tmux-navigator' " movement between tmux panes just like between vim windows
+Plug 'Shougo/unite.vim'             " Prerequisite for some nice UI-stuff e.g. VimFiler.
+Plug 'Shougo/vimfiler.vim'          " File Explorer
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
-Plug 'mhinz/vim-startify'
+Plug 'jiangmiao/auto-pairs'         " Auto close brackets
+Plug 'mhinz/vim-startify'           " That's that fancy start screen with last opened and stuff.
 Plug 'kshenoy/vim-signature'
 Plug 'majutsushi/tagbar'
 Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'WolfgangMehner/lua-support'
-Plug 'tpope/vim-dispatch'
-Plug 'Chiel92/vim-autoformat'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+"Plug 'scrooloose/nerdtree'         " I'm trying replacing nerdTree with VimFiler
+"Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'WolfgangMehner/lua-support'  " Who writes lua - seriously?
+"Plug 'tpope/vim-dispatch'          " Dispatches async calls. I don't actually use this atm
+Plug 'Chiel92/vim-autoformat'       " I'm not using this yet
+Plug 'SirVer/ultisnips'             " This one's a keeper
+Plug 'honza/vim-snippets'           " And these are some snippets for ultisnips
 "Plug 'scrooloose/syntastic'
 "Plug 'gilligan/vim-lldb'
-Plug 'critiqjo/lldb.nvim'
+"Plug 'critiqjo/lldb.nvim'      " lldb is a debugger
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/c.vim'
-Plug 'tikhomirov/vim-glsl'
-Plug 'mileszs/ack.vim'
+"Plug 'tikhomirov/vim-glsl'     " OpenGl Shading language highlighting
+"Plug 'mileszs/ack.vim'         " Some search tool that I don't need - I think.
 Plug 'powerman/vim-plugin-viewdoc'
-Plug 'rizzatti/dash.vim'
+"Plug 'rizzatti/dash.vim'
 "Plug 'rdnetto/YCM-Generator'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --tern-completer' }
+
+" Themes
+Plug 'morhetz/gruvbox'
+Plug 'sickill/vim-monokai'
+Plug 'chriskempson/base16-vim'
+Plug 'NLKNguyen/papercolor-theme'
 
 call plug#end()
 
+
+" ================
+" Configuration (Appearance, Plugins, Settings; in that order)
+" ================
+" ----------------
+" Appearance
+" ----------------
 " ---
 " Theme
 " ---
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "set t_Co=256
-set background=dark
+let $TERM = "xterm-256color"  " xterm colors
+let base16colorspace=256      " base16 colorscheme specific
+let g:base16_shell_path='~/.config/base16-builder/output/shell/'  " automatic terminal theme switch?
+let base16colorspace="256"
+" gruvbox theme dependent
 "let g:gruvbox_contrast_dark='soft'
-let g:gruvbox_invert_signs=0
-let g:gruvbox_sign_column='dark0'
-colorscheme gruvbox
+"let g:gruvbox_invert_signs=0
+"let g:gruvbox_sign_column='dark0'
 
-set fillchars+=vert:│
+" Set the theme here: (Remember to change the terminal-emulators colors.)
+" Other nice themes: base16-tomorrow, base16-default, base16-monokai
+set background=light
+colorscheme PaperColor
+" Set appropriate Airlinetheme
+let g:airline_theme = 'papercolor'
 
 " ---
-" Nerdtree
+" Other
+" ---
+set fillchars+=vert:│
+let &colorcolumn="81,".join(range(121,999), ",")
+
+" ----------------
+" Plugins
+" ----------------
+" ---
+" VimFiler
+" ---
+" Like Textmate icons.
+let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_marked_file_icon = '*'
+
+" ---
+" Nerdtree @deprecated
 " ---
 " Autoclose when closing last buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -76,6 +127,8 @@ let g:tagbar_compact = 1
 " ---
 let g:ycm_register_as_syntastic_checker = 1 "default 1
 let g:Show_diagnostics_ui = 1 "default 1
+let g:ycm_key_list_select_completion=[]
+let g:yvm_key_list_previoud_completion=[]
 
 "will put icons in Vim's gutter on lines that have a diagnostic set.
 "Turning this off will also turn off the YcmErrorLine and YcmWarningLine
@@ -120,8 +173,6 @@ let g:ycm_semantic_triggers =  {
     \   'erlang' : [':'],
     \ }
 
-nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
-
 " ---
 " GitGutter Symbols
 " ---
@@ -134,8 +185,6 @@ let g:gitgutter_sign_modified_removed = '='
 " ---
 " AirLine
 " ---
-" Set theme
-let g:airline_theme = 'gruvbox'
 " Show airline with single file
 set laststatus=2
 " Use powerline font
@@ -143,26 +192,53 @@ let g:airline_powerline_fonts = 1
 " Enable tabline
 let g:airline#extensions#tabline#enabled = 1
 
+" buffer number in airline:
+call airline#parts#define_function('buffernr', 'Airline_buffernumber')
+
+function! AirlineInit()
+  " adds buffernumber to section x (leftmost right section)"
+  let g:airline_section_x = airline#section#create_right(['buffernr','filetype'])
+endfunction
+
+" buffernumber for airline
+function! Airline_buffernumber()
+  return printf(
+    \ 'BN:%s',
+    \ bufnr("%")
+  \)
+endfunction
+
+autocmd VimEnter * call AirlineInit()
+
 " ---
 " Settings
 " ---
-set hidden
+
+" Indenting blocks of code without losing the selection
+vnoremap < <gv
+vnoremap > >gv
+
+" Line numbers and line length
+set number " toggle relative numbers using <leader>r
+
+" line length and wrapping defaults
+set tw=80
+set fo-=t " no wrapping at textwidth
+set wm=0  " no wrapping at terminal width
+set nowrap
+
+set hidden  " Don't close abandoned buffers
 set mouse=a
 
-"set nowrap        " don't wrap lines
 set backspace=indent,eol,start
 " allow backspacing over everything in insert mode
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
 set number        " always show line numbers
-set shiftwidth=2  " number of spaces to use for autoindenting
-set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
 set showmatch     " set show matching parenthesis
 set ignorecase    " ignore case when searching
 set smartcase     " ignore case if search pattern is all lowercase,
 " case-sensitive otherwise
-set smarttab      " insert tabs on the start of a line according to
-" shiftwidth, not tabstop
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 
@@ -178,18 +254,22 @@ set noswapfile
 
 filetype plugin indent on
 
-set listchars=tab:›\ ,eol:¬   " Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:›\ ,eol:¬,trail:-,nbsp:+   " Use the same symbols as TextMate for tabstops and EOLs
 
 syntax enable
 set nocompatible
 
 " Tab behavior
-set smarttab
+set smarttab     " insert tabs on the start of a line according to context
 set expandtab
 set tabstop=2
 set shiftwidth=2
 
-set clipboard=unnamed
+" Shift (>> <<) behaviour
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+
+" Standard yank (without specifying the system register +) yanks into the systems clipboard.
+set clipboard+=unnamedplus
 
 " ---
 " Post Load Fixes
@@ -200,33 +280,138 @@ function CorrectColorScheme()
 
   highlight VertSplit ctermbg=NONE guifg=#404040 guibg=NONE
 endfunction
+
 autocmd VimEnter * call CorrectColorScheme()
 
+command! CloseHiddenBuffers call s:CloseHiddenBuffers()
+function! s:CloseHiddenBuffers()
+  let open_buffers = []
+
+  for i in range(tabpagenr('$'))
+    call extend(open_buffers, tabpagebuflist(i+1))
+  endfor
+
+  for num in range(1, bufnr('$')+1)
+    if buflisted(num) && index(open_buffers, num) == -1
+      exec "bdelete ".num
+    endif
+  endfor
+endfunction
+
 " ---
+" Toggle the colorcolumn (mapped under section @Mappings)
+" ---
+function! g:ToggleColorColumn()
+  if &colorcolumn != ''
+    setlocal colorcolumn&
+  else
+    let &colorcolumn="81,".join(range(121,999), ",")
+  endif
+endfunction
+
+
+" ================
 " Mappings
-" ---
+" ================
 let mapleader=" "
 
-" Learn it the hard way
-nmap <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+" Escape mapped to homerow combo
+imap jk <Esc>
+" In addition to this I map the capslock to esc using xmodmap. This provides annn easy <Esc> on home row even for visual mode and who uses capslock anyway.
 
-map <leader>l :set list!<CR>
-map <leader>w :set wrap!<CR>
-map <leader>n :NERDTreeToggle<CR>
-map <leader>m :TagbarToggle<CR>
+" ---
+" Buffer interaction
+" ---
+nnoremap <leader>bch :CloseHiddenBuffers<CR>  " Closes all hidden buffers that do not require force closing.
 
+nnoremap <leader>bl :buffers<CR>
+nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bg :buffers<CR>:buffer
+nnoremap <leader>bn :bNext<CR>
+nnoremap <leader>bj :buffers<CR>:sb
+""nnoremap <leader>bjv :buffers<CR>:vert sb
+
+" nxt/prev buffer and close buffer (not mnemonic)
 map <leader>, :bp!<CR>
 map <leader>. :bn!<CR>
 map <leader>x :bd<CR>
+
+" ---
+" Windows interaction
+" ---
+" Window movement   " Overkill as this seems to be defined by default or one of the plugins (the tmux one maybe)
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+" Window splitting
+nmap <C-w>s :sp<CR>
+nmap <C-w>vs :vsp<CR>
+nmap <C-w>q :q<CR>  " Don't know if this one's a good idea but it seems intuitive.
+" Split resizing uses the standard bindings. Notable ones are:
+" {n-times}<C-w>< and > for vertical splits
+" {n-times}<C-w>+ and - for horizontal splits
+" {n-times}<C-w>_ and | set split size exactly
+
+" ---
+" Toggles
+" ---
+nnoremap <leader>l :set list!<CR>
+nnoremap <leader>w :set wrap!<CR>
+nnoremap <leader>t :TagbarToggle<CR>
+nnoremap <leader>r :set relativenumber!<CR>
+nnoremap <leader>s :set spell!<CR>
+nnoremap <leader>cc :call g:ToggleColorColumn()<CR>
+"map <leader>n is mapped in the @VimFiler section
+
+" ---
+" Miscellaneous
+" ---
+nnoremap <leader>/ :noh<CR>  " Omit highlights from previous search
+" Shorthand to manually set a syntax if the filetype cannot be read:
+nnoremap <leader>ss :set syntax=
+
+
+" ---
+" VimFiler
+" ---
+"nnoremap <leader>n :call <SID>VimFileDrawerInWD()<CR>
+nnoremap <leader>n :VimFiler -buffer-name=sidemenu -simple -split -winwidth=27 -toggle -no-quit -no-focus<CR>
+" explorer:
+nnoremap <leader>e :VimFilerBufferDir -buffer-name=explorer -force-quit<CR>
+
+" ===
+" Terminal
+" ===
+" The basic principle of terminal interaction behind this configuration is that you always interact with the terminal in insert mode. It should feel like the terminal is a standard terminal window open in a second tmux pane. "
+:tmap <Esc> <C-\><C-n>         " exits insert mode in terminal
+:tmap bd <C-\><C-n>:bd!<CR>  " closes the terminal buffer quickly
+:tnoremap :q<CR> <C-\><C-n>:bd!<CR> " closes the terminal buffer as well
+:tnoremap <C-w>q <C-\><C-n>:bd!<CR> " and as well <- this one has a really nice flow when looking at it like just another window
+" TODO cleanup the ones I don't end up using
+
+" Terminal window movement without explicitly leaving insertmode
+:tmap <C-h> <C-\><C-n><C-w>h
+:tmap <C-j> <C-\><C-n><C-w>j
+:tmap <C-k> <C-\><C-n><C-w>k
+:tmap <C-w>l <C-\><C-n><C-w>l    " this one would otherwise contradict the normal terminal content flushing keymapping.
+:tmap <silent> <C-l> <C-l><C-\><C-n>:echom "You might be looking for \<C-w\>l. That will move window focus to the left. \<Enter\> to proceed."<CR>i
+:tmap <C-w>H <C-\><C-n><C-w>Hi
+:tmap <C-w>J <C-\><C-n><C-w>Ji
+:tmap <C-w>K <C-\><C-n><C-w>Ki
+:tmap <C-w>L <C-\><C-n><C-w>Li
+
+" Automatically enter insert mode when focusing terminal
+autocmd BufWinEnter,WinEnter term://* startinsert
+
+" ---
+" YouCompleteMe
+" ---
+nnoremap <F11> :YcmForceCompileAndDiagnostics <CR>
 
 nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gs :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gt :YcmCompleter GetType<CR>
 nnoremap <leader>gp :YcmCompleter GetParent<CR>
 nnoremap <leader>f :YcmCompleter FixIt<CR>
-
-nmap <silent> <leader>d <Plug>DashSearch
 
