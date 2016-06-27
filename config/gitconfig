@@ -21,3 +21,4 @@
   commit = no
 [pull]
   ff = only
+  rebase = true
