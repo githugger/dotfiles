@@ -21,10 +21,11 @@ call plug#begin('~/.config/nvim/plugged')
 " ---
 " Plugins
 " ---
-Plug 'tpope/vim-dispatch'          " Dispatches async calls. I don't actually use this atm
 Plug 'Chiel92/vim-autoformat'       " I'm not using this yet
+Plug 'Quramy/tsuquyomi'             " Typescript support, lintint, completion etc.
 Plug 'Shougo/unite.vim'             " Prerequisite for some nice UI-stuff e.g. VimFiler.
 Plug 'Shougo/vimfiler.vim'          " File Explorer
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'SirVer/ultisnips'             " This one's a keeper
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --tern-completer' }
 Plug 'airblade/vim-gitgutter'
@@ -32,7 +33,7 @@ Plug 'bling/vim-airline'
 Plug 'christoomey/vim-tmux-navigator' " movement between tmux panes just like between vim windows
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'ervandew/supertab'        " Get along, Ycm and UltiSnips!
+Plug 'ervandew/supertab'            " Get along, Ycm and UltiSnips!
 Plug 'honza/vim-snippets'           " And these are some snippets for ultisnips
 Plug 'jiangmiao/auto-pairs'         " Auto close brackets
 Plug 'kshenoy/vim-signature'
@@ -42,6 +43,7 @@ Plug 'neomake/neomake'
 Plug 'powerman/vim-plugin-viewdoc'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-dispatch'          " Dispatches async calls. I don't actually use this atm
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline-themes'
@@ -229,12 +231,18 @@ autocmd VimEnter * call AirlineInit()
 " ---
 autocmd! BufWritePost * Neomake
 
-" Maker preferences:
+" ---
+" NeoMaker preferences:
+" ---
+" javascript:
 ""let g:neomake_javascript_eslint_maker = {
 ""  \ 'args': ['--no-color','--format','compact', '-f'],
 ""  \ 'errorformat': '%f: line %l\, col %c\, %m'
 ""\ }
 let g:neomake_javascript_enabled_makers = ['eslint', 'jshint']
+
+" typescript: linting and syntax analysis is handled by Quramy/tsuquyomi for ts
+let g:neomake_typescript_enabled_makers = []
 
 " Colored warning and error gutter symbols
 "let g:neomake_warning_sign = {'text':'⚠', 'texthl': 'NeomakeWarn'}
