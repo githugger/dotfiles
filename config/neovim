@@ -21,40 +21,40 @@ call plug#begin('~/.config/nvim/plugged')
 " ---
 " Plugins
 " ---
-Plug 'christoomey/vim-tmux-navigator' " movement between tmux panes just like between vim windows
+Plug 'tpope/vim-dispatch'          " Dispatches async calls. I don't actually use this atm
+Plug 'Chiel92/vim-autoformat'       " I'm not using this yet
 Plug 'Shougo/unite.vim'             " Prerequisite for some nice UI-stuff e.g. VimFiler.
 Plug 'Shougo/vimfiler.vim'          " File Explorer
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-fugitive'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'SirVer/ultisnips'             " This one's a keeper
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --tern-completer' }
+Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-surround'
+Plug 'christoomey/vim-tmux-navigator' " movement between tmux panes just like between vim windows
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'ervandew/supertab'        " Get along, Ycm and UltiSnips!
+Plug 'honza/vim-snippets'           " And these are some snippets for ultisnips
 Plug 'jiangmiao/auto-pairs'         " Auto close brackets
-Plug 'mhinz/vim-startify'           " That's that fancy start screen with last opened and stuff.
 Plug 'kshenoy/vim-signature'
 Plug 'majutsushi/tagbar'
-Plug 'airblade/vim-gitgutter'
-"Plug 'scrooloose/nerdtree'         " I'm trying replacing nerdTree with VimFiler
-"Plug 'Xuyuanp/nerdtree-git-plugin'
-"Plug 'WolfgangMehner/lua-support'  " Who writes lua - seriously?
-"Plug 'tpope/vim-dispatch'          " Dispatches async calls. I don't actually use this atm
-Plug 'Chiel92/vim-autoformat'       " I'm not using this yet
-Plug 'SirVer/ultisnips'             " This one's a keeper
-Plug 'honza/vim-snippets'           " And these are some snippets for ultisnips
-"Plug 'scrooloose/syntastic'
-"Plug 'gilligan/vim-lldb'
-"Plug 'critiqjo/lldb.nvim'      " lldb is a debugger
-Plug 'ryanoasis/vim-devicons'
-Plug 'vim-scripts/c.vim'
-"Plug 'tikhomirov/vim-glsl'     " OpenGl Shading language highlighting
-"Plug 'mileszs/ack.vim'         " Some search tool that I don't need - I think.
+Plug 'mhinz/vim-startify'           " That's that fancy start screen with last opened and stuff.
+Plug 'neomake/neomake'
 Plug 'powerman/vim-plugin-viewdoc'
-"Plug 'rizzatti/dash.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/c.vim'
+"Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'critiqjo/lldb.nvim'      " lldb is a debugger
+"Plug 'gilligan/vim-lldb'
+"Plug 'mileszs/ack.vim'         " Some search tool that I don't need - I think.
 "Plug 'rdnetto/YCM-Generator'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --tern-completer' }
-Plug 'ervandew/supertab'        " Get along, Ycm and UltiSnips!
+"Plug 'rizzatti/dash.vim'
+"Plug 'scrooloose/nerdtree'         " I'm trying replacing nerdTree with VimFiler
+"Plug 'scrooloose/syntastic'
+"Plug 'tikhomirov/vim-glsl'     " OpenGl Shading language highlighting
 
 " Themes
 Plug 'morhetz/gruvbox'
@@ -225,8 +225,32 @@ endfunction
 autocmd VimEnter * call AirlineInit()
 
 " ---
-" Settings
+" Neomake
 " ---
+autocmd! BufWritePost * Neomake
+
+" Maker preferences:
+""let g:neomake_javascript_eslint_maker = {
+""  \ 'args': ['--no-color','--format','compact', '-f'],
+""  \ 'errorformat': '%f: line %l\, col %c\, %m'
+""\ }
+let g:neomake_javascript_enabled_makers = ['eslint', 'jshint']
+
+" Colored warning and error gutter symbols
+"let g:neomake_warning_sign = {'text':'⚠', 'texthl': 'NeomakeWarn'}
+"let g:neomake_error_sign = {'text':'✖', 'texthl': 'NeomakeErr'}
+" Syntastic style
+hi NeomakeWarn ctermbg=3 ctermfg=0 guibg=3 guifg=0
+hi NeomakeErr guifg=red guibg=yellow
+let g:neomake_error_sign = {'text':'>>', 'texthl': 'ErrorMsg'}
+let g:neomake_warning_sign = {'text':'>>', 'texthl': 'NeomakeWarn'}
+
+" TODO there is a feature request on github for line and column highlighting
+" which I am also interested in. Keep an eye out for that!
+
+" ----------------
+" Settings
+" ----------------
 
 " Indenting blocks of code without losing the selection
 vnoremap < <gv
