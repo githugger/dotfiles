@@ -32,8 +32,8 @@ xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
 xterm*renderFont: true
 !xterm*faceName: Ubuntu Mono:size=11
 !xterm*faceName: Ubuntu Mono:size=21
-!xterm*faceName: UbuntuMonoDerivativePowerline Nerd Font:size=12
-xterm*faceName: Meslo LG S DZ for Powerline Plus Nerd File Types Plus Font Awesome Plus Octicons Plus Pomicons:size=10
+xterm*faceName: UbuntuMonoDerivativePowerline Nerd Font:size=12
+!xterm*faceName: Meslo LG S DZ for Powerline Plus Nerd File Types Plus Font Awesome Plus Octicons Plus Pomicons:size=10
 
 !colortheme
 !#define S_base03        #002b36

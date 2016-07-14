@@ -40,6 +40,7 @@ Plug 'kshenoy/vim-signature'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-startify'           " That's that fancy start screen with last opened and stuff.
 Plug 'neomake/neomake'
+Plug 'benjie/neomake-local-eslint.vim'
 Plug 'powerman/vim-plugin-viewdoc'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sheerun/vim-polyglot'
@@ -239,7 +240,7 @@ autocmd! BufWritePost * Neomake
 ""  \ 'args': ['--no-color','--format','compact', '-f'],
 ""  \ 'errorformat': '%f: line %l\, col %c\, %m'
 ""\ }
-let g:neomake_javascript_enabled_makers = ['eslint', 'jshint']
+let g:neomake_javascript_enabled_makers = ['eslint']  "alternative of add: jshint
 
 " typescript: linting and syntax analysis is handled by Quramy/tsuquyomi for ts
 let g:neomake_typescript_enabled_makers = []
@@ -255,6 +256,11 @@ let g:neomake_warning_sign = {'text':'>>', 'texthl': 'NeomakeWarn'}
 
 " TODO there is a feature request on github for line and column highlighting
 " which I am also interested in. Keep an eye out for that!
+
+" ---
+" CtrlP
+" ---
+let g:ctrlp_working_path_mode = "ra"
 
 " ----------------
 " Settings
